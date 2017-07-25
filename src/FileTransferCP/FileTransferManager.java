@@ -16,9 +16,9 @@ public class FileTransferManager implements TransferBehaviour {
     }
 
     public void start() {
-        TransferBuffer transferBuffer = new TransferBuffer(4096, 0);
+        TransferBuffer transferBuffer = new TransferBuffer();
 
-        FileProducer fileProducer = new FileProducer(semaphoreProducer, semaphoreConsumer, transferBuffer);
+        FileProducer fileProducer = new FileProducer(semaphoreProducer, semaphoreConsumer, transferBuffer, this);
         FileConsumer fileConsumer = new FileConsumer(semaphoreConsumer, semaphoreProducer, transferBuffer);
 
         this.fileProducer = fileProducer;
@@ -29,6 +29,7 @@ public class FileTransferManager implements TransferBehaviour {
     }
 
     public void stop() {
+        System.out.println("Transfer Manager Stop called!");
         this.fileProducer.stop();
         this.fileConsumer.stop();
     }
