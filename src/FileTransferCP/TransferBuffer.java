@@ -5,7 +5,7 @@ public class TransferBuffer {
     private int length;
 
     public void setBuffer(byte[] buffer, int length) {
-        this.buffer = buffer;
+        this.buffer = buffer.clone();
         this.length = length;
     }
 
