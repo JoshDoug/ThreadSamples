@@ -27,11 +27,13 @@ public class FileConsumer extends Task implements Runnable, TransferBehaviour {
             byte[] buffer = new byte[1048576];
             while (!exit) {
                 try {
-                    //TODO: Test to see if Consumer thread gets stuck here
+                    System.out.println("Now waiting to acquire on Consumer thread");
                     semaphoreConsumer.acquire();
-
                     System.out.println("Consumer aquired.");
-                    fos.write(transferBuffer.getBuffer(), 0, transferBuffer.getLength());
+                    if(transferBuffer.getLength() > 0) {
+                        fos.write(transferBuffer.getBuffer(), 0, transferBuffer.getLength());
+                    }
+                    transferBuffer.setLength(0);
                     System.out.println("Consumer released.");
 
                     semaphoreProducer.release();
@@ -49,6 +51,7 @@ public class FileConsumer extends Task implements Runnable, TransferBehaviour {
 
     public void stop() {
         this.exit = true;
+        semaphoreConsumer.release();
         System.out.println("Exit Consumer Called");
     }
 

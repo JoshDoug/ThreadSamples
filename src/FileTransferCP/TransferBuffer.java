@@ -16,4 +16,8 @@ public class TransferBuffer {
     public int getLength() {
         return this.length;
     }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
 }
