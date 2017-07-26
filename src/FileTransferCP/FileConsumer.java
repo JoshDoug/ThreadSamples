@@ -27,6 +27,7 @@ public class FileConsumer extends Task implements Runnable, TransferBehaviour {
             byte[] buffer = new byte[1048576];
             while (!exit) {
                 try {
+                    //TODO: Test to see if Consumer thread gets stuck here
                     semaphoreConsumer.acquire();
 
                     System.out.println("Consumer aquired.");
