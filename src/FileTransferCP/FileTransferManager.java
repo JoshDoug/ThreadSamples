@@ -7,6 +7,8 @@ public class FileTransferManager implements TransferBehaviour {
     Semaphore semaphoreConsumer;
     TransferBehaviour fileProducer;
     TransferBehaviour fileConsumer;
+    Thread fileProd;
+    Thread fileCons;
 
 
     public FileTransferManager() {
@@ -24,8 +26,11 @@ public class FileTransferManager implements TransferBehaviour {
         this.fileProducer = fileProducer;
         this.fileConsumer = fileConsumer;
 
-        new Thread(fileProducer).start();
-        new Thread(fileConsumer).start();
+        this.fileProd = new Thread(fileProducer, "File Producer");
+        this.fileCons = new Thread(fileConsumer, "File Consumer");
+
+        this.fileProd.start();
+        this.fileCons.start();
     }
 
     public void stop() {
